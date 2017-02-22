@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="main"></div>
-  <svg></svg>
+  <svg class="svg"></svg>
   <script>
   console.log('hello?')
   const arr = [1, 2, 6, 8, 3, 3]
@@ -33,19 +33,21 @@
   //   .attr('width', 25)
   //   .attr('height', 100)
 
+  const yScale = d3.scaleLinear().domain([243, 3131, 10701, 18064]).range([0, 50, 75, 100]);
+
   d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json', (error, data) => dataViz(data));
    function dataViz(incomingData) {
-      d3.select('svg')
+      d3.select('svg').attr('style', 'height: 500px; width: 500px;')
         .selectAll('rect')
-        .data([15, 50, 22, 8, 100, 10])
+        .data(incomingData.data.map(d => d[1]))
         .enter()
         .append('rect')
         .attr('width', 10)
         .attr('height', d => d)
         .style('stroke', '#9a8b7a')
         .style('stroke-width', '1px')
-        .attr('x', (d, i) => i * 10)
-        .attr('y', d => 100 - d);
+        .attr('x', (d, i) => yScale(d))
+        .attr('y', d => 100 - yScale(d))
     }
 
 
