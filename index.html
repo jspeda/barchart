@@ -7,50 +7,41 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="main"></div>
-  <svg class="svg"></svg>
+  <div class="chart"></div>
+  <!-- <svg class="svg"></svg> -->
   <script>
   console.log('hello?')
   const arr = [1, 2, 6, 8, 3, 3]
-
-// d3.select('svg')
-//   .selectAll('rect')
-//   .data(arr)
-//   .enter()
-//   .append('rect')
-//   .attr('x', 0)
-//   .attr('y', 0)
-//   .attr('width', 25)
-//   .attr('height', d => d)
-
-  // svg.selectAll('rect')
-  //   .data(arr)
-  //   .enter()
-  //   .append('rect')
-  //   // .style('background-color', 'blue')
-  //   .attr('x', 0)
-  //   .attr('y', 0)
-  //   .attr('width', 25)
-  //   .attr('height', 100)
-
   const yScale = d3.scaleLinear().domain([243, 3131, 10701, 18064]).range([0, 50, 75, 100]);
 
   d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json', (error, data) => dataViz(data));
    function dataViz(incomingData) {
-      d3.select('svg').attr('style', 'height: 500px; width: 500px;')
-        .selectAll('rect')
+     incomingData.data.map(d => console.log(d[1]))
+    let bar = d3.select('.chart')
+        .append('svg')
+          .attr('width', 2000)
+          .attr('height', 5000)
+        .selectAll('g')
         .data(incomingData.data.map(d => d[1]))
         .enter()
-        .append('rect')
-        .attr('width', 10)
-        .attr('height', d => d)
-        .style('stroke', '#9a8b7a')
-        .style('stroke-width', '1px')
-        .attr('x', (d, i) => yScale(d))
-        .attr('y', d => 100 - yScale(d))
+        .append('g')
+        .attr('transform', (d, i) => `translate(0, ${i * 20})`);
+
+    bar.append('rect')
+        .style('width', d => d * 0.25)
+        .attr('class', 'bar')
+
+
+        // .attr('width', 10)
+        // .attr('height', d => d)
+        // .style('stroke', '#9a8b7a')
+        // .style('stroke-width', '1px')
+        // .attr('x', (d, i) => yScale(d))
+        // .attr('y', d => 100 - yScale(d))
     }
 
 
   </script>
+
 </body>
 </html>
