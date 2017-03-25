@@ -13,7 +13,7 @@
   console.log('hello?')
   const arr = [1, 2, 6, 8, 3, 3]
   const yScale = d3.scaleLinear().domain([243, 3131, 10701, 18064]).range([0, 50, 75, 100]);
-
+  const xScale = d3.scaleLinear().domain([243.1, 18064.7]).range([0, 1000])
   d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json', (error, data) => dataViz(data));
    function dataViz(incomingData) {
      incomingData.data.map(d => console.log(d[1]))
@@ -28,7 +28,7 @@
         .attr('transform', (d, i) => `translate(0, ${i * 20})`);
 
     bar.append('rect')
-        .style('width', d => d * 0.25)
+        .style('width', d => xScale(d))
         .attr('class', 'bar')
 
 
