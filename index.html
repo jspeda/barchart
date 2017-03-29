@@ -8,19 +8,22 @@
 </head>
 <body>
   <div class="chart"></div>
-  <!-- <svg class="svg"></svg> -->
   <script>
-  console.log('hello?')
-  const arr = [1, 2, 6, 8, 3, 3]
-  const yScale = d3.scaleLinear().domain([243, 3131, 10701, 18064]).range([0, 50, 75, 100]);
+
   const xScale = d3.scaleLinear().domain([243.1, 18064.7]).range([0, 1000])
+  const xAxis = d3.axisLeft(xScale);
+
+  const margin = { top: 10, right: 50, bottom: 10, left: 50}
+  const width = 2000 - margin.left - margin.right;
+  const height = 5500 - margin.top - margin.bottom;
+
   d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json', (error, data) => dataViz(data));
    function dataViz(incomingData) {
      incomingData.data.map(d => console.log(d[1]))
     let bar = d3.select('.chart')
         .append('svg')
           .attr('width', 2000)
-          .attr('height', 5000)
+          .attr('height', 5500)
         .selectAll('g')
         .data(incomingData.data.map(d => d[1]))
         .enter()
@@ -31,6 +34,7 @@
         .style('width', d => xScale(d))
         .attr('class', 'bar')
 
+    bar.call(xAxis)
 
         // .attr('width', 10)
         // .attr('height', d => d)
